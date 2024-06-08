@@ -74,7 +74,7 @@ while True:
     print(filenames)
     require_image = int(input("Enter an image index ranges from 0 to length of the list - 1: "))
     # require_image = 2
-    if require_image < len(filenames):
+    if int(require_image) < len(filenames):
         print(f"Image Name: {filenames[require_image].split('/')[-1]}")  # Displaying the image name
         image = images[require_image]
 
@@ -96,7 +96,7 @@ while True:
 
     #processing the chosen image above using the function developed in the previous step
     processed_image=process_image(image)
-    print(type(processed_image), processed_image.shape)
+    # print(type(processed_image), processed_image.shape)
 
 
     #Defining the model that will be used for conversation with the images
@@ -139,7 +139,7 @@ while True:
                 input_ids,
                 images=image_tensor,
                 do_sample=True,
-                temperature=0.01, #change the value according to your needs
+                temperature=0.08, #change the value according to your needs
                 max_new_tokens=512,
                 use_cache=True,
                 stopping_criteria=[stopping_criteria]
@@ -152,6 +152,8 @@ while True:
     # %%time 
     #using the above paramers for the prompting as well as the processing of the image, tokenize of the prompt, encoding
     new_Prompt = input("Enter the prompt here: ")
+    if new_Prompt =="exit": break
+    print(colored('Explanation of the Image.', 'grey', attrs=['reverse', 'blink']))
     result=ask_image(image, new_Prompt)
     print(textwrap.fill(result,width=110))
 
